@@ -1,0 +1,11 @@
+**3.3. Kiểm soát quyền thực thi công cụ (Tool Permission & Sandboxing)**
+
+Ngay cả khi đã triển khai cơ chế PBAC và bộ lọc Guardrails, bản chất tự trị (autonomous) của AI Agent vẫn là một rủi ro hiện hữu nếu hệ thống cấp cho nó quyền truy cập không giới hạn vào bộ công cụ tương tác (tools). Tại SeABank, kiến trúc bảo mật bắt buộc phải thiết lập cơ chế kiểm soát quyền thực thi công cụ tuân thủ nguyên tắc đặc quyền tối thiểu (Principle of Least Privilege), kết hợp với kỹ thuật cô lập môi trường (Sandboxing).
+
+**Ma trận phân quyền API (API Permission Matrix)**
+Thay vì mở hệ thống để Agent tự do khám phá, kiến trúc đề xuất yêu cầu thiết lập một ma trận phân quyền công cụ tĩnh (hardcoded permission matrix). Ma trận này định nghĩa chính xác tập hợp các hàm API mà Agent được phép gọi.
+Đối với các giao tiếp hướng tới Oracle Analytics Server (OAS) hay lõi Data Warehouse, mọi luồng API đều phải bị khóa cứng ở trạng thái Chỉ đọc (Read-only). Cụ thể, Agent chỉ được cấp quyền gọi các hàm truy xuất dữ liệu (như thực thi truy vấn `SELECT`). Hệ thống API Gateway chặn đứng và từ chối xử lý ở cấp độ giao thức đối với bất kỳ lệnh nào mang tính chất thay đổi trạng thái dữ liệu (State-changing operations) như `INSERT`, `UPDATE`, hay `DELETE`. Nếu kẻ tấn công khai thác lỗ hổng để lừa Agent phát lệnh "xóa báo cáo nợ xấu", truy vấn này sẽ bị hủy ngay từ vòng ngoài do vi phạm ma trận phân quyền, bảo toàn tuyệt đối tính toàn vẹn của cơ sở dữ liệu gốc.
+
+**Cô lập môi trường thực thi (Agent Sandboxing)**
+Bên cạnh việc thắt chặt quyền API, bản thân bộ vi xử lý của AI (bao gồm LLM và môi trường thực thi mã nội bộ) cần được cách ly hoàn toàn khỏi vùng mạng lõi của ngân hàng. 
+Cơ chế Sandboxing thực thi điều này bằng cách đóng gói Agent vào các vùng chứa (containers) phi trạng thái (stateless). Network Egress (luồng mạng xuất) của sandbox bị kiểm soát chặt chẽ thông qua danh sách trắng (whitelisting): Agent chỉ được phép tạo kết nối đến các điểm cuối (endpoints) bắt buộc như Vector Database và cổng API của OAS, đồng thời bị ngắt hoàn toàn kết nối ra Internet. Trong kịch bản mã độc lọt được vào Agent và cố gắng kết xuất dữ liệu nội bộ ra máy chủ bên ngoài (Data Exfiltration), bức tường lửa tại tầng Sandbox sẽ lập tức đánh chặn gói tin, đồng thời phát tín hiệu tiêu hủy hoàn toàn phiên bản Agent bị lây nhiễm.

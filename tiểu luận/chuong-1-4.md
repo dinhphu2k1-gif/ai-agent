@@ -1,0 +1,15 @@
+**1.4. Kiến trúc Zero Trust trong AI (AI Zero Trust Architecture)**
+
+Trong các hệ thống công nghệ thông tin truyền thống, bảo mật thường được thiết lập theo mô hình: tường lửa bảo vệ vòng ngoài, và bất cứ ai sở hữu định danh hợp lệ (tài khoản, chứng chỉ) khi đã vào bên trong đều được mặc nhiên tin tưởng. Tuy nhiên, sự xuất hiện của các AI Agent đã khiến tư duy này trở nên rủi ro. Khác với con người, AI không có khả năng tự nhận thức ranh giới an toàn và đạo đức của các thao tác dữ liệu. Thực trạng này đòi hỏi một sự dịch chuyển thiết yếu sang kiến trúc Zero Trust (Không tin cậy), với nguyên tắc cốt lõi: "Không bao giờ tin tưởng, luôn luôn xác minh" (Never trust, always verify). Trong hệ sinh thái AI, nguyên tắc này yêu cầu hệ thống phải thẩm định độc lập từng hành vi vi mô của Agent.
+
+Để thấy rõ sự cần thiết của Zero Trust, chúng ta cần nhìn lại cơ chế ủy quyền định danh (On-Behalf-Of) ở mục 1.3. Việc hệ thống cấp cho AI Agent một mã thông báo (token) hợp lệ mang danh tính của người dùng chỉ mới giải quyết được bài toán "định danh", nhưng lại bỏ ngỏ bài toán "hành vi". 
+
+Lấy một ví dụ cụ thể tại ngân hàng: Giám đốc Vùng A ra lệnh cho AI Agent *"Tổng hợp doanh thu của Chi nhánh B"*. AI Agent lúc này mang theo token hợp lệ của Giám đốc A để kết nối vào cơ sở dữ liệu (đáp ứng đúng tiêu chuẩn ủy quyền). Tuy nhiên, giả sử một kẻ tấn công đã sử dụng kỹ thuật Prompt Injection để bí mật nhúng câu lệnh độc hại vào hệ thống, lừa AI Agent tự động phát sinh thêm một lệnh ngầm: *"Tải về toàn bộ thông tin thẻ tín dụng của khách hàng"*. 
+
+Nếu hệ thống cơ sở dữ liệu chỉ kiểm tra danh tính một cách thụ động, nó sẽ thấy token của Giám đốc A là hoàn toàn hợp lệ (vì cấp giám đốc có đặc quyền rất cao) và mù quáng chấp thuận lệnh tải dữ liệu nhạy cảm này. Đây là lỗ hổng chí mạng khi hệ thống chỉ tin tưởng vào chứng thư định danh mà không xác minh bản chất của hành động.
+
+Kiến trúc Zero Trust khắc phục triệt để rủi ro này bằng cách xóa bỏ khái niệm "phiên làm việc (session) mặc định an toàn". Thay vào đó, hệ thống thiết lập các điểm kiểm soát trung tâm (Policy Enforcement Point) để mổ xẻ và kiểm tra chéo từng lời gọi hàm (API call) mà Agent phát ra. 
+
+Trở lại với kịch bản trên, khi AI Agent phát lệnh gọi API nhằm lấy dữ liệu thẻ tín dụng, cơ chế Zero Trust sẽ ngay lập tức can thiệp. Nó phân tích các tham số (parameter) của API và đối chiếu với bối cảnh tác vụ hiện tại. Hệ thống sẽ phát hiện ra sự bất thường: hành vi *"lấy dữ liệu thẻ tín dụng"* hoàn toàn không có sự liên quan logic nào với yêu cầu ban đầu là *"tổng hợp doanh thu"*. Lập tức, API call này bị từ chối, bất chấp việc nó đi kèm với token hợp lệ của Giám đốc.
+
+Bằng cách thiết lập các chốt chặn xác minh liên tục ngay tại tầng giao diện lập trình (API layer), Zero Trust tạo ra một cơ chế miễn dịch ở mức độ sâu. Cơ chế này đảm bảo rằng kể cả trong kịch bản xấu nhất – khi "bộ não" của AI Agent bị đánh lừa hoàn toàn bởi mã độc – thì khả năng phát tán thiệt hại (blast radius) vẫn bị cô lập ở mức tối đa. Hệ thống ngăn chặn tuyệt đối việc kẻ gian lợi dụng danh tính hợp pháp để thao túng hoặc đánh cắp các vùng dữ liệu cốt lõi của tổ chức.

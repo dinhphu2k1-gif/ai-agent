@@ -1,0 +1,110 @@
+services:
+  # PostgreSQL: Database quan hệ cho metadata hoặc dữ liệu có cấu trúc
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: my_database
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d my_database"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # OpenSearch: metadata data dictionary (hybrid k-NN + BM25 for metadata agent)
+  opensearch:
+    image: opensearchproject/opensearch:2.19.2
+    container_name: opensearch_db
+    restart: always
+    environment:
+      cluster.name: agentic-opensearch
+      node.name: opensearch-node1
+      discovery.type: single-node
+      bootstrap.memory_lock: "true"
+      OPENSEARCH_JAVA_OPTS: "-Xms512m -Xmx512m"
+      # Must match OPENSEARCH_PASSWORD in .env (OpenSearch password policy applies)
+      OPENSEARCH_INITIAL_ADMIN_PASSWORD: "MetadaaAgent@2026!"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "9200:9200"
+      # 9600 = Performance Analyzer (optional); omitted on Windows if port is reserved
+    volumes:
+      - opensearch_data:/usr/share/opensearch/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -sk -u admin:MetadaaAgent@2026! https://127.0.0.1:9200/_cluster/health?wait_for_status=yellow&timeout=5s || exit 1",
+        ]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  # Redis Stack: LangGraph AsyncRedisSaver needs RediSearch (FT.*), not plain redis:alpine
+  redis:
+    image: redis/redis-stack-server:latest
+    container_name: redis_db
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  # Neo4j: Database đồ thị cho các liên kết phức tạp, lineage hoặc RAG
+  neo4j:
+    image: neo4j:5.18-community
+    container_name: neo4j_db
+    restart: always
+    ports:
+      - "7474:7474" # Giao diện HTTP (Browser)
+      - "7687:7687" # Giao thức Bolt (Cho code kết nối)
+    environment:
+      NEO4J_AUTH: neo4j/password123
+      NEO4J_PLUGINS: '["apoc"]' # Cài sẵn APOC - bộ công cụ cực mạnh cho Neo4j
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama_container
+    restart: always
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_storage:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+volumes:
+  postgres_data:
+  opensearch_data:
+  redis_data:
+  neo4j_data:
+  neo4j_logs:
+  ollama_storage:

@@ -1,0 +1,16 @@
+### CHƯƠNG 3: ĐỀ XUẤT KIẾN TRÚC QUẢN TRỊ QUYỀN TRUY CẬP CHO AI AGENT TẠI SEABANK
+
+**3.1. Mô hình phân quyền đề xuất: PBAC kết hợp On-Behalf-Of (OBO)**
+
+Để vô hiệu hóa các lỗ hổng kiến trúc đã nhận diện ở Chương 2, hệ thống bảo mật của SeABank cần một cơ chế phân quyền đủ linh hoạt để hỗ trợ AI tự trị, nhưng cũng phải đủ khắt khe để duy trì tính toàn vẹn của dữ liệu. Sự kết hợp giữa mô hình Kiểm soát truy cập dựa trên mục đích (Purpose-Based Access Control - PBAC) và cơ chế ủy quyền On-Behalf-Of (OBO) là kiến trúc tối ưu nhất để đáp ứng yêu cầu kép này.
+
+Việc lựa chọn tổ hợp PBAC - OBO xuất phát từ đặc thù thiết kế của nền tảng Oracle Analytics Server (OAS). OAS phụ thuộc hoàn toàn vào định danh cá nhân (Session Variables) để kích hoạt thuật toán Row-Level Security (RLS). Cơ chế OBO giải quyết bài toán này bằng cách cho phép AI Agent "kế thừa" chính xác danh tính của người dùng (ví dụ: Giám đốc chi nhánh A) thay vì sử dụng một tài khoản dịch vụ (Service Account) chung. Song song đó, PBAC đóng vai trò chốt chặn vi mô: nó ép buộc đặc quyền của AI Agent phải gắn liền với từng mục đích truy vấn cụ thể (ví dụ: chỉ được phép "đọc báo cáo nợ xấu", nghiêm cấm "đọc dữ liệu nhân sự"). Thiết kế này khắc phục triệt để hiện tượng phình to phạm vi truy cập (Data Scope Creep).
+
+Cơ chế phân quyền này được vận hành thực tế thông qua một luồng luân chuyển mã thông báo (Token Flow) nghiêm ngặt, bao gồm bốn chu trình cốt lõi:
+
+1.  **Xác thực người dùng khởi tạo:** Quá trình bắt đầu khi người dùng (Giám đốc) đăng nhập vào ứng dụng Chat. Hệ thống xác thực qua Active Directory và trả về một mã thông báo truy cập gốc (Primary Access Token), đại diện cho toàn bộ quyền hạn hợp pháp của Giám đốc trên hệ thống ngân hàng.
+2.  **Cấp phát token ủy quyền (Token Exchange):** Khi người dùng đặt câu hỏi, hệ thống không giao trực tiếp token gốc cho AI Agent. Thay vào đó, một cổng định danh trung gian (Identity Proxy) sẽ áp dụng giao thức RFC 8693 (OAuth 2.0 Token Exchange) để đổi token gốc lấy một mã OBO Token. Đặc biệt, OBO Token này bị ép các ràng buộc PBAC thông qua tham số `scope` (phạm vi). Ví dụ, token mới chỉ có thời hạn hiệu lực 5 phút và chỉ mang duy nhất quyền `read:bad_debt_report`.
+3.  **Thực thi truy xuất bằng API:** AI Agent buộc phải đính kèm OBO Token này vào Header của mọi lời gọi API hướng đến OAS. Bất kỳ API call nào có hành vi lệch khỏi `scope` định sẵn (ví dụ: cố tình gọi hàm `read:customer_pii`) đều bị Gateway từ chối ngay lập tức theo nguyên tắc Zero Trust.
+4.  **Kích hoạt Row-Level Security (RLS):** Khi tiếp nhận lời gọi API hợp lệ, OAS tiến hành giải mã OBO Token và nhận diện thành công việc AI Agent đang thao tác "thay mặt" Giám đốc chi nhánh A. Máy chủ WebLogic tự động nạp các Session Variables tương ứng, đánh thức cơ chế RLS tại lớp RPD và chèn trực tiếp các điều kiện lọc (filter) vào câu lệnh SQL. Kết quả cuối cùng trả về cho Agent bị giới hạn tuyệt đối trong phạm vi dữ liệu mà Giám đốc A được phép xem.
+
+Sự liên kết chặt chẽ giữa PBAC và OBO tạo ra một cơ chế định tuyến an toàn. Nó cho phép SeABank tận dụng sức mạnh xử lý ngôn ngữ tự nhiên của AI mà không cần đập bỏ hay cấu hình lại hàng nghìn quy tắc RLS đang vận hành ổn định bên trong lõi phân tích Oracle.

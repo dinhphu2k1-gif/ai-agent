@@ -1,0 +1,30 @@
+{
+  "defaults": {
+    "roleManagement": { "selectedRoleId": "role-data-scientist-eu" },
+    "groupManagement": { "selectedGroupId": "grp-de-core" }
+  },
+  "users": {
+    "count": 7,
+    "activeCount": 6
+  },
+  "roles": [
+    { "id": "role-data-scientist-eu", "permissionCount": 10 },
+    { "id": "role-marketing-analyst", "permissionCount": 3 },
+    { "id": "role-sysadmin-global", "permissionCountMin": 1 }
+  ],
+  "groups": [
+    { "id": "grp-de-core", "roleCount": 3 },
+    { "id": "grp-marketing", "roleCountMin": 0 },
+    { "id": "grp-contractors", "roleCountMin": 0 }
+  ],
+  "grp-de-core": {
+    "memberCount": 4,
+    "assignedRoleCount": 3,
+    "directPermissionCount": 0,
+    "inheritedPermissionCountMin": 10
+  },
+  "resourceTree": {
+    "databaseNames": ["analytics_db", "marketing_db"],
+    "minTopLevelNodes": 2
+  }
+}

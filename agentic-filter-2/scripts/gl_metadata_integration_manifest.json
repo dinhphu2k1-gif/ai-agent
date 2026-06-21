@@ -1,0 +1,475 @@
+{
+  "database_name": "COREDB",
+  "opensearch_index": "data_dictionary",
+  "describe_user_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+  "describe_permissions_created": 0,
+  "opensearch_documents_mapped": 121,
+  "tables": [
+    {
+      "schema_name": "CIF",
+      "table_name": "CIF_ACCOUNTS",
+      "catalog_resource_id": "60a46190-1d91-41f1-bd15-bddbf6f6b0f9",
+      "opensearch_id": "6331d48d-1e49-4ec6-a798-ff456049de93",
+      "catalog_key": "TABLE|COREDB|CIF|CIF_ACCOUNTS",
+      "columns_sample": [
+        {
+          "column_name": "CIF_ACCOUNT_ID",
+          "catalog_resource_id": "dbd1f736-b426-41e5-a28a-d01c759be786",
+          "opensearch_id": "cb546292-cac6-43fb-9729-ae2083311023",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_ACCOUNTS|CIF_ACCOUNT_ID"
+        },
+        {
+          "column_name": "CUSTOMER_ID",
+          "catalog_resource_id": "775cc20a-f507-4285-9a06-4507c67454c7",
+          "opensearch_id": "5f82d7fa-d579-4c9b-8ca3-d435240c2f16",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_ACCOUNTS|CUSTOMER_ID"
+        },
+        {
+          "column_name": "ACCOUNT_ID",
+          "catalog_resource_id": "fe20f837-96c2-4167-b601-931ac802fbfc",
+          "opensearch_id": "f9cdba39-616b-4c6c-a83b-13bd4cb60ff2",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_ACCOUNTS|ACCOUNT_ID"
+        },
+        {
+          "column_name": "ACCOUNT_NUMBER",
+          "catalog_resource_id": "c0b9cfe5-9f22-4f14-9a5b-95e93561264d",
+          "opensearch_id": "51f3c837-7ff6-4961-b9f2-1a5b3401913f",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_ACCOUNTS|ACCOUNT_NUMBER"
+        },
+        {
+          "column_name": "ACCOUNT_ROLE",
+          "catalog_resource_id": "9892b3c8-b09d-418e-900f-468b103bf66e",
+          "opensearch_id": "71ba56b9-52eb-4a1d-8021-73271b97c1d9",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_ACCOUNTS|ACCOUNT_ROLE"
+        }
+      ],
+      "column_count": 8
+    },
+    {
+      "schema_name": "CIF",
+      "table_name": "CIF_ADDRESSES",
+      "catalog_resource_id": "671780d0-af6b-49c1-b05e-931c7b06b5d7",
+      "opensearch_id": "f8662547-4ded-4222-a0b5-9aafd4b2437b",
+      "catalog_key": "TABLE|COREDB|CIF|CIF_ADDRESSES",
+      "columns_sample": [
+        {
+          "column_name": "ADDRESS_ID",
+          "catalog_resource_id": "22c23bf1-f4fe-4e73-a261-4475a1af94ce",
+          "opensearch_id": "84fc07a1-b64c-450a-8793-43594f7d8e6c",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_ADDRESSES|ADDRESS_ID"
+        },
+        {
+          "column_name": "CUSTOMER_ID",
+          "catalog_resource_id": "4cc7bdcc-359e-419d-beb2-3c9088763d62",
+          "opensearch_id": "31d6381a-ebbe-463d-b703-25fa8a429e44",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_ADDRESSES|CUSTOMER_ID"
+        },
+        {
+          "column_name": "ADDRESS_TYPE",
+          "catalog_resource_id": "c85284ea-81b8-4fb4-b12a-d14d045c138b",
+          "opensearch_id": "d4a705d7-fb2c-4fe9-9efb-c9f8f4077c5d",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_ADDRESSES|ADDRESS_TYPE"
+        },
+        {
+          "column_name": "ADDRESS_LINE",
+          "catalog_resource_id": "295d739a-e286-45c1-8d2d-4211f9272146",
+          "opensearch_id": "0b40e6d0-b244-4087-b15b-ac6ecc5435a9",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_ADDRESSES|ADDRESS_LINE"
+        },
+        {
+          "column_name": "WARD_NAME",
+          "catalog_resource_id": "fb0f2225-4ed2-41bd-8be7-5f1bd851626f",
+          "opensearch_id": "cfdd6d6d-93c9-479c-8011-8a5062b91aef",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_ADDRESSES|WARD_NAME"
+        }
+      ],
+      "column_count": 8
+    },
+    {
+      "schema_name": "CIF",
+      "table_name": "CIF_CUSTOMERS",
+      "catalog_resource_id": "f00ccf65-b207-42c8-8b19-660c6f604d0a",
+      "opensearch_id": "5c85264f-f70a-42d1-8cf5-5c859da56ac5",
+      "catalog_key": "TABLE|COREDB|CIF|CIF_CUSTOMERS",
+      "columns_sample": [
+        {
+          "column_name": "CUSTOMER_ID",
+          "catalog_resource_id": "16a86552-86bb-4488-a4ba-ef724af01914",
+          "opensearch_id": "14448ac3-3cb8-4649-86c1-dc650636330d",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_CUSTOMERS|CUSTOMER_ID"
+        },
+        {
+          "column_name": "CIF_NUMBER",
+          "catalog_resource_id": "b55ee01e-53d7-4d68-bb08-3ffa13670d76",
+          "opensearch_id": "70c850fa-da2e-4781-ab96-492acb225477",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_CUSTOMERS|CIF_NUMBER"
+        },
+        {
+          "column_name": "CUSTOMER_TYPE",
+          "catalog_resource_id": "f1e16480-531a-4e59-a941-1e3aca2d3cf1",
+          "opensearch_id": "70d722a2-ea99-424a-8edf-b04a19cee510",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_CUSTOMERS|CUSTOMER_TYPE"
+        },
+        {
+          "column_name": "FULL_NAME",
+          "catalog_resource_id": "f4872982-5aa3-4f3e-8ac7-7ba6a4384c44",
+          "opensearch_id": "47d2fa95-1a68-4b2f-a84e-12ae0777131a",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_CUSTOMERS|FULL_NAME"
+        },
+        {
+          "column_name": "DATE_OF_BIRTH",
+          "catalog_resource_id": "cba4fb84-1934-4f92-9a0f-5a895a5db648",
+          "opensearch_id": "72fe4224-7f73-4157-8225-eaba1bbbabb0",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_CUSTOMERS|DATE_OF_BIRTH"
+        }
+      ],
+      "column_count": 12
+    },
+    {
+      "schema_name": "CIF",
+      "table_name": "CIF_IDENTIFICATIONS",
+      "catalog_resource_id": "c4f4df22-be1f-49ec-8fbc-dd0228fb5c2a",
+      "opensearch_id": "79c5868b-f389-4576-a22d-f5fa45d77249",
+      "catalog_key": "TABLE|COREDB|CIF|CIF_IDENTIFICATIONS",
+      "columns_sample": [
+        {
+          "column_name": "IDENTIFICATION_ID",
+          "catalog_resource_id": "724e256d-c2a7-447e-9948-66fb0b63f48e",
+          "opensearch_id": "2062ce9f-a9b0-4ea3-bc55-e920a307e8ae",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_IDENTIFICATIONS|IDENTIFICATION_ID"
+        },
+        {
+          "column_name": "CUSTOMER_ID",
+          "catalog_resource_id": "bbc6e13f-100d-42b0-82ab-e87eebb2d9cf",
+          "opensearch_id": "41d7a5b8-9689-4bb9-83e3-1654e6f52598",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_IDENTIFICATIONS|CUSTOMER_ID"
+        },
+        {
+          "column_name": "ID_TYPE",
+          "catalog_resource_id": "0a36338f-94a6-4bfa-b434-94fbddf46698",
+          "opensearch_id": "833df9e9-6f4f-4da3-9463-9b3847437636",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_IDENTIFICATIONS|ID_TYPE"
+        },
+        {
+          "column_name": "ID_NUMBER",
+          "catalog_resource_id": "936bd090-66f0-4031-ad11-8ea78dc1f4d0",
+          "opensearch_id": "ae33db6f-57d2-4211-bc7a-54f1d70d49d6",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_IDENTIFICATIONS|ID_NUMBER"
+        },
+        {
+          "column_name": "ISSUE_DATE",
+          "catalog_resource_id": "92c7c776-24f0-4512-967f-45589484773f",
+          "opensearch_id": "d51bf1cc-5623-4025-9ca0-8182eebef4e5",
+          "catalog_key": "COLUMN|COREDB|CIF|CIF_IDENTIFICATIONS|ISSUE_DATE"
+        }
+      ],
+      "column_count": 8
+    },
+    {
+      "schema_name": "GL",
+      "table_name": "GL_ACCOUNTS",
+      "catalog_resource_id": "1c27c98b-8fe5-4191-b348-52b1365e5882",
+      "opensearch_id": "8ca71f26-60f4-4977-8782-59b13f86e8b4",
+      "catalog_key": "TABLE|COREDB|GL|GL_ACCOUNTS",
+      "columns_sample": [
+        {
+          "column_name": "ACCOUNT_ID",
+          "catalog_resource_id": "204ea7d3-ba6a-4d7f-8698-7a173ffc8dd2",
+          "opensearch_id": "94915b62-f7e0-4c79-8ea2-c09e7811b568",
+          "catalog_key": "COLUMN|COREDB|GL|GL_ACCOUNTS|ACCOUNT_ID"
+        },
+        {
+          "column_name": "ACCOUNT_CODE",
+          "catalog_resource_id": "0f60918d-6807-4648-9899-89700165fc3f",
+          "opensearch_id": "c87d2bb7-e417-4024-ab14-ec54e4d331f1",
+          "catalog_key": "COLUMN|COREDB|GL|GL_ACCOUNTS|ACCOUNT_CODE"
+        },
+        {
+          "column_name": "ACCOUNT_NAME",
+          "catalog_resource_id": "5de2edb8-4865-4943-bbb9-9e736584465d",
+          "opensearch_id": "08b28524-d72f-4534-800a-570d8e28f076",
+          "catalog_key": "COLUMN|COREDB|GL|GL_ACCOUNTS|ACCOUNT_NAME"
+        },
+        {
+          "column_name": "ACCOUNT_TYPE",
+          "catalog_resource_id": "69796e55-cfd4-4178-a416-27b7821ddd0a",
+          "opensearch_id": "f47e7efe-f051-4e19-8c6e-b3a6c9ce69f0",
+          "catalog_key": "COLUMN|COREDB|GL|GL_ACCOUNTS|ACCOUNT_TYPE"
+        },
+        {
+          "column_name": "ACCOUNT_LEVEL",
+          "catalog_resource_id": "afdc33af-70f3-4bbc-8a2e-108cd6d2dc67",
+          "opensearch_id": "6359edbd-2bfd-4503-8bec-034aa16280cf",
+          "catalog_key": "COLUMN|COREDB|GL|GL_ACCOUNTS|ACCOUNT_LEVEL"
+        }
+      ],
+      "column_count": 11
+    },
+    {
+      "schema_name": "GL",
+      "table_name": "GL_BALANCES",
+      "catalog_resource_id": "784ac0fe-a00e-4b5f-9034-e77b171e97c0",
+      "opensearch_id": "c210a1f8-3f71-4df4-a90b-b66fc2748605",
+      "catalog_key": "TABLE|COREDB|GL|GL_BALANCES",
+      "columns_sample": [
+        {
+          "column_name": "BALANCE_ID",
+          "catalog_resource_id": "accffba3-3c84-450c-8661-4ea0d504ae8a",
+          "opensearch_id": "14dc8d67-46a0-428e-9143-7713303ceec3",
+          "catalog_key": "COLUMN|COREDB|GL|GL_BALANCES|BALANCE_ID"
+        },
+        {
+          "column_name": "ACCOUNT_ID",
+          "catalog_resource_id": "6b7676e2-a56d-4728-9231-5fe8b011ae5c",
+          "opensearch_id": "b06b3c0b-dec9-4489-befe-2246a2c63331",
+          "catalog_key": "COLUMN|COREDB|GL|GL_BALANCES|ACCOUNT_ID"
+        },
+        {
+          "column_name": "COST_CENTER_ID",
+          "catalog_resource_id": "3297db41-297f-456c-9cb9-51aa98a507ba",
+          "opensearch_id": "282c87a7-757d-41e7-862a-ce058b446939",
+          "catalog_key": "COLUMN|COREDB|GL|GL_BALANCES|COST_CENTER_ID"
+        },
+        {
+          "column_name": "PERIOD_ID",
+          "catalog_resource_id": "b4c8bef0-b655-4416-b15a-9c2cb5edc564",
+          "opensearch_id": "c526d17b-db4d-4a83-8c7d-0fb17d847296",
+          "catalog_key": "COLUMN|COREDB|GL|GL_BALANCES|PERIOD_ID"
+        },
+        {
+          "column_name": "CURRENCY_CODE",
+          "catalog_resource_id": "eae52f0c-7d03-4f7c-9335-2a07a164aca7",
+          "opensearch_id": "558b587b-cf59-44c5-8fa4-50bdd9105b00",
+          "catalog_key": "COLUMN|COREDB|GL|GL_BALANCES|CURRENCY_CODE"
+        }
+      ],
+      "column_count": 14
+    },
+    {
+      "schema_name": "GL",
+      "table_name": "GL_COST_CENTERS",
+      "catalog_resource_id": "3fafc8c4-083b-4f2a-9bea-f47bd3386510",
+      "opensearch_id": "dcb11a94-f1d9-4217-826d-dd02ada27cea",
+      "catalog_key": "TABLE|COREDB|GL|GL_COST_CENTERS",
+      "columns_sample": [
+        {
+          "column_name": "COST_CENTER_ID",
+          "catalog_resource_id": "637d918d-3f39-4945-863a-f3b4e2e47236",
+          "opensearch_id": "e8c2b001-8629-4365-b60d-3309d014ef3e",
+          "catalog_key": "COLUMN|COREDB|GL|GL_COST_CENTERS|COST_CENTER_ID"
+        },
+        {
+          "column_name": "COST_CENTER_CODE",
+          "catalog_resource_id": "c29e1d10-25c5-45ce-9b67-67f2efd931ea",
+          "opensearch_id": "62a1c9df-b321-4901-899f-3577c99b5d01",
+          "catalog_key": "COLUMN|COREDB|GL|GL_COST_CENTERS|COST_CENTER_CODE"
+        },
+        {
+          "column_name": "COST_CENTER_NAME",
+          "catalog_resource_id": "9f3e2759-56ce-4724-a070-355da59be70f",
+          "opensearch_id": "a9d477b5-69c1-4700-9450-fd62db488495",
+          "catalog_key": "COLUMN|COREDB|GL|GL_COST_CENTERS|COST_CENTER_NAME"
+        },
+        {
+          "column_name": "COST_CENTER_TYPE",
+          "catalog_resource_id": "eca7801f-bad3-4b4c-9773-d912426a3a9e",
+          "opensearch_id": "a57f11d6-05a8-4210-91df-4264baef6f1e",
+          "catalog_key": "COLUMN|COREDB|GL|GL_COST_CENTERS|COST_CENTER_TYPE"
+        },
+        {
+          "column_name": "REGION_CODE",
+          "catalog_resource_id": "8bd1896c-5ba2-4e56-8799-fc48c9a8ad2c",
+          "opensearch_id": "879e87d2-723d-46a2-93d1-0e8e1cd29dc5",
+          "catalog_key": "COLUMN|COREDB|GL|GL_COST_CENTERS|REGION_CODE"
+        }
+      ],
+      "column_count": 7
+    },
+    {
+      "schema_name": "GL",
+      "table_name": "GL_JOURNAL_HEADERS",
+      "catalog_resource_id": "6a5c380c-a6d4-43ea-8dc7-5f8f3f730e4a",
+      "opensearch_id": "c46a866d-d84c-4d40-ac20-291dcd0e7131",
+      "catalog_key": "TABLE|COREDB|GL|GL_JOURNAL_HEADERS",
+      "columns_sample": [
+        {
+          "column_name": "JOURNAL_ID",
+          "catalog_resource_id": "54b529a2-b126-4f3f-b5a7-ea3c84bc631e",
+          "opensearch_id": "d2d8873f-a2c2-47f7-914e-f17b73431a5d",
+          "catalog_key": "COLUMN|COREDB|GL|GL_JOURNAL_HEADERS|JOURNAL_ID"
+        },
+        {
+          "column_name": "JOURNAL_NUMBER",
+          "catalog_resource_id": "926497cd-0cf9-4e35-92f5-9950e02c8cb7",
+          "opensearch_id": "17bfc638-7fee-402b-bbd5-0782f7dc473c",
+          "catalog_key": "COLUMN|COREDB|GL|GL_JOURNAL_HEADERS|JOURNAL_NUMBER"
+        },
+        {
+          "column_name": "JOURNAL_DATE",
+          "catalog_resource_id": "9e582cf2-e4ce-40df-8a14-263df6c0c073",
+          "opensearch_id": "eaaab682-ff56-4c84-ac62-565e72f1cbbb",
+          "catalog_key": "COLUMN|COREDB|GL|GL_JOURNAL_HEADERS|JOURNAL_DATE"
+        },
+        {
+          "column_name": "ACCOUNTING_DATE",
+          "catalog_resource_id": "de0893e1-e4d8-48fc-bdde-db172c958bf7",
+          "opensearch_id": "cf0b8321-9b01-4607-94cc-19e682d25ed3",
+          "catalog_key": "COLUMN|COREDB|GL|GL_JOURNAL_HEADERS|ACCOUNTING_DATE"
+        },
+        {
+          "column_name": "PERIOD_ID",
+          "catalog_resource_id": "9930b349-a848-4025-924e-4097ef029df5",
+          "opensearch_id": "61b11b4a-e4d1-4758-9bea-8b48455e6a46",
+          "catalog_key": "COLUMN|COREDB|GL|GL_JOURNAL_HEADERS|PERIOD_ID"
+        }
+      ],
+      "column_count": 16
+    },
+    {
+      "schema_name": "GL",
+      "table_name": "GL_JOURNAL_LINES",
+      "catalog_resource_id": "f362e89d-a21c-4527-ac08-2920249f4d3a",
+      "opensearch_id": "223efb37-004b-4f0f-8c84-92b17cca1c1a",
+      "catalog_key": "TABLE|COREDB|GL|GL_JOURNAL_LINES",
+      "columns_sample": [
+        {
+          "column_name": "LINE_ID",
+          "catalog_resource_id": "a1d35094-a4b2-451d-ad9b-2600e33e5394",
+          "opensearch_id": "63df36f9-3a73-453e-aa2f-22a5ab5c0c5a",
+          "catalog_key": "COLUMN|COREDB|GL|GL_JOURNAL_LINES|LINE_ID"
+        },
+        {
+          "column_name": "JOURNAL_ID",
+          "catalog_resource_id": "5c4479d8-e8c5-4bcd-b484-23f2b182991b",
+          "opensearch_id": "c9944c47-43aa-410a-b01c-64787e90fd56",
+          "catalog_key": "COLUMN|COREDB|GL|GL_JOURNAL_LINES|JOURNAL_ID"
+        },
+        {
+          "column_name": "LINE_NUMBER",
+          "catalog_resource_id": "7179aa99-9d5e-4385-8380-a309715f92b0",
+          "opensearch_id": "b93e006b-8458-40ce-b857-89b457d9dc70",
+          "catalog_key": "COLUMN|COREDB|GL|GL_JOURNAL_LINES|LINE_NUMBER"
+        },
+        {
+          "column_name": "ACCOUNT_ID",
+          "catalog_resource_id": "145d345f-dafa-4e69-adf3-bad3a91d8563",
+          "opensearch_id": "5c123a73-242f-485d-81d6-d3fe229825cf",
+          "catalog_key": "COLUMN|COREDB|GL|GL_JOURNAL_LINES|ACCOUNT_ID"
+        },
+        {
+          "column_name": "COST_CENTER_ID",
+          "catalog_resource_id": "ba4b2439-a7d3-4e98-8228-1207a13b78a8",
+          "opensearch_id": "cfd9bb38-5142-4e0a-a5e6-4dae096c3028",
+          "catalog_key": "COLUMN|COREDB|GL|GL_JOURNAL_LINES|COST_CENTER_ID"
+        }
+      ],
+      "column_count": 14
+    },
+    {
+      "schema_name": "GL",
+      "table_name": "GL_PERIODS",
+      "catalog_resource_id": "d81adb96-c092-491c-946a-0a51c5a82905",
+      "opensearch_id": "a428241a-97b1-4777-9a91-4772e516f555",
+      "catalog_key": "TABLE|COREDB|GL|GL_PERIODS",
+      "columns_sample": [
+        {
+          "column_name": "PERIOD_ID",
+          "catalog_resource_id": "6349f3a5-9866-440a-81d4-094d8a4fecb0",
+          "opensearch_id": "d86d0d1f-841a-41cc-b119-bd9892ba9245",
+          "catalog_key": "COLUMN|COREDB|GL|GL_PERIODS|PERIOD_ID"
+        },
+        {
+          "column_name": "PERIOD_NAME",
+          "catalog_resource_id": "29598e6e-5f9f-42b2-914f-1a77829c77f3",
+          "opensearch_id": "4d24c6a3-b6b3-4f59-977a-5167e2a55d5d",
+          "catalog_key": "COLUMN|COREDB|GL|GL_PERIODS|PERIOD_NAME"
+        },
+        {
+          "column_name": "FISCAL_YEAR",
+          "catalog_resource_id": "0b77899b-1a97-457a-8507-80b04cec4c98",
+          "opensearch_id": "c91cadfa-facc-4afc-9d55-bfdcc6591aa1",
+          "catalog_key": "COLUMN|COREDB|GL|GL_PERIODS|FISCAL_YEAR"
+        },
+        {
+          "column_name": "PERIOD_NUMBER",
+          "catalog_resource_id": "e89f6cb8-242e-43e8-9933-2bbbb17dadfa",
+          "opensearch_id": "0125d08c-3d7e-49b0-90b7-b482f9e1ed20",
+          "catalog_key": "COLUMN|COREDB|GL|GL_PERIODS|PERIOD_NUMBER"
+        },
+        {
+          "column_name": "START_DATE",
+          "catalog_resource_id": "4372e52c-0301-44bd-8bb8-3fdf004ee761",
+          "opensearch_id": "64eff16e-6b84-43db-8dbb-9220f8067ac2",
+          "catalog_key": "COLUMN|COREDB|GL|GL_PERIODS|START_DATE"
+        }
+      ],
+      "column_count": 8
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_name": "Chi tiết bút toán kế toán",
+      "opensearch_id": "32b078a0-d677-437d-a466-a77706b13af2",
+      "catalog_key": "RELATIONSHIP|COREDB|Chi tiết bút toán kế toán|GL_ACCOUNTS,GL_JOURNAL_HEADERS,GL_JOURNAL_LINES"
+    },
+    {
+      "relationship_name": "Số dư tài khoản theo kỳ và đơn vị",
+      "opensearch_id": "8eecef8f-71b6-41df-8e61-fd1d801b14d2",
+      "catalog_key": "RELATIONSHIP|COREDB|Số dư tài khoản theo kỳ và đơn vị|GL_ACCOUNTS,GL_BALANCES,GL_COST_CENTERS,GL_PERIODS"
+    },
+    {
+      "relationship_name": "Bút toán kế toán theo kỳ",
+      "opensearch_id": "62488676-88af-433a-98ae-426f85d46853",
+      "catalog_key": "RELATIONSHIP|COREDB|Bút toán kế toán theo kỳ|GL_JOURNAL_HEADERS,GL_JOURNAL_LINES,GL_PERIODS"
+    },
+    {
+      "relationship_name": "Giao dịch GL theo khách hàng",
+      "opensearch_id": "93107b32-e7e3-4b8b-ad78-c3a2f11d0c9b",
+      "catalog_key": "RELATIONSHIP|COREDB|Giao dịch GL theo khách hàng|CIF_ACCOUNTS,CIF_CUSTOMERS,GL_ACCOUNTS,GL_JOURNAL_HEADERS,GL_JOURNAL_LINES"
+    },
+    {
+      "relationship_name": "Hồ sơ đầy đủ khách hàng",
+      "opensearch_id": "9a7428b0-8cdc-455e-b110-dc1f8e812374",
+      "catalog_key": "RELATIONSHIP|COREDB|Hồ sơ đầy đủ khách hàng|CIF_ACCOUNTS,CIF_ADDRESSES,CIF_CUSTOMERS,CIF_IDENTIFICATIONS"
+    }
+  ],
+  "sample_metadata_requests": {
+    "keyword_search_demo_user": {
+      "method": "POST",
+      "path": "/api/v1/metadata/keyword-search",
+      "body": {
+        "userId": "demo_user",
+        "query": "journal",
+        "size": 10
+      }
+    },
+    "keyword_search_agri_agent": {
+      "method": "POST",
+      "path": "/api/v1/metadata/keyword-search",
+      "body": {
+        "userId": "agri_agent",
+        "query": "journal",
+        "size": 10
+      }
+    },
+    "table_lookup": {
+      "method": "GET",
+      "path": "/api/v1/metadata/tables/GL_JOURNAL_HEADERS",
+      "query": {
+        "userId": "agri_agent",
+        "size": 5
+      }
+    }
+  },
+  "agri_integration_user": {
+    "userId": "agri_agent",
+    "user_id": "845069b7-a70f-58f5-b8df-1e0c5682f3e0",
+    "group": "agri_integration",
+    "role": "Agri_Integration_Reader",
+    "permissions_allow": [
+      "USAGE",
+      "SELECT",
+      "DESCRIBE"
+    ]
+  }
+}

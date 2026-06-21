@@ -1,0 +1,21 @@
+# LỜI MỞ ĐẦU
+
+**1. Lý do chọn đề tài**
+Trong bối cảnh chuyển đổi số đang diễn ra mạnh mẽ tại lĩnh vực tài chính - ngân hàng, các hệ thống Trí tuệ doanh nghiệp (Business Intelligence - BI) truyền thống đang dần chuyển dịch sang mô hình BI được thúc đẩy bởi Trí tuệ nhân tạo (AI-driven BI). Việc tích hợp các Trợ lý ảo AI (AI Agents) vào hệ thống BI không chỉ giúp tối ưu hóa quy trình phân tích dữ liệu mà còn trao quyền cho người dùng nghiệp vụ (như Giám đốc chi nhánh, chuyên viên phân tích) khả năng truy vấn thông tin, tự động hóa tạo báo cáo thông qua ngôn ngữ tự nhiên một cách nhanh chóng và trực quan.
+
+Tuy nhiên, sự xuất hiện của AI Agents trong các hệ thống BI, đặc biệt là tại các tổ chức tín dụng như Ngân hàng TMCP Đông Nam Á (SeABank), mang lại những thách thức an toàn thông tin đặc thù và nghiêm trọng. Các mô hình AI khi được cấp quyền truy cập vào kho dữ liệu tài chính nhạy cảm có thể trở thành một điểm yếu bảo mật rủi ro cao. Nếu AI Agent sử dụng một tài khoản dịch vụ (Service Account) đặc quyền để truy vấn cơ sở dữ liệu thay cho người dùng, nó sẽ vô tình làm mất tác dụng của các cơ chế bảo mật tinh vi đã được thiết lập từ trước, điển hình là tính năng kiểm soát truy cập ở cấp độ dòng dữ liệu (Row-Level Security - RLS). Bên cạnh đó, các rủi ro bảo mật mới đặc thù của AI như Prompt Injection, Data Exfiltration thông qua thao tác của AI cũng đặt ra yêu cầu cấp thiết về một mô hình kiểm soát quyền truy cập mới. 
+
+Nhận thức được tầm quan trọng của việc cân bằng giữa sự đổi mới công nghệ và đảm bảo an ninh dữ liệu tuyệt đối, tác giả quyết định chọn đề tài: **"Nghiên cứu ứng dụng mô hình quản trị quyền truy cập dữ liệu cho AI Agents: Tích hợp an toàn trên nền tảng Business Intelligence (Oracle Analytics Server) tại SeABank"** làm tiểu luận cuối kỳ. Đề tài này đóng vai trò kế thừa và phát triển từ các kết quả phân tích hệ thống bảo mật của SeABank trong bài tập giữa kỳ, nhằm đưa ra giải pháp bảo mật toàn diện đón đầu kỷ nguyên AI.
+
+**2. Mục tiêu nghiên cứu**
+Mục tiêu cốt lõi của đề tài là nghiên cứu và đề xuất một mô hình quản trị quyền truy cập dữ liệu hiện đại, chuyên biệt dành cho AI Agent khi tích hợp vào nền tảng BI. Giải pháp được đề xuất phải giải quyết được bài toán hóc búa: Cho phép AI truy xuất dữ liệu để phục vụ người dùng nhưng phải đảm bảo **tuyệt đối không phá vỡ hoặc đi đường vòng qua các cơ chế bảo mật cốt lõi** (như Row-Level Security, Object-Level Security) vốn có của hệ thống BI. Đồng thời, đề tài cũng hướng tới việc thiết lập một chuẩn mực bảo mật Zero Trust cho các giao tiếp giữa AI Agent và các phân hệ dữ liệu của ngân hàng.
+
+**3. Đối tượng và phạm vi nghiên cứu**
+- **Đối tượng nghiên cứu:** Các mô hình quản trị quyền truy cập dữ liệu tiên tiến (PBAC, ABAC, ReBAC), cơ chế ủy quyền định danh an toàn cho hệ thống tự động (Identity Delegation, On-Behalf-Of), và kiến trúc bảo mật của hệ thống AI Agent ứng dụng trong doanh nghiệp.
+- **Phạm vi nghiên cứu:** Giới hạn trong khuôn khổ hệ thống Business Intelligence hiện tại của Ngân hàng TMCP Đông Nam Á (SeABank), cụ thể là nền tảng **Oracle Analytics Server (OAS)**. Các kịch bản và dữ liệu phân tích tập trung vào quy trình khai thác dữ liệu tài chính nội bộ (ví dụ: truy vấn nợ xấu, doanh thu) của các cấp quản lý tại chi nhánh ngân hàng.
+
+**4. Phương pháp nghiên cứu**
+Để đạt được các mục tiêu trên, đề tài sử dụng kết hợp các phương pháp nghiên cứu sau:
+- **Phương pháp phân tích lý thuyết (Theoretical Analysis):** Tổng hợp tài liệu học thuật, các khung tiêu chuẩn bảo mật quốc tế (NIST AI RMF, OWASP for LLM) để làm rõ bản chất hoạt động của AI Agent và sự ưu việt của các mô hình phân quyền mới so với mô hình RBAC truyền thống.
+- **Phương pháp phân tích hệ thống (System Analysis):** Đánh giá kiến trúc bảo mật hiện hữu của nền tảng Oracle Analytics Server tại SeABank (kế thừa kết quả giữa kỳ) để xác định chính xác các "khoảng trống bảo mật" (Security Gaps) khi đưa AI vào hệ thống.
+- **Phương pháp mô hình hóa kiến trúc (Architecture Modeling):** Thiết kế và xây dựng mô hình giải pháp kiến trúc bảo mật tổng thể (bao gồm cơ chế On-Behalf-Of và kiến trúc RAG Pipeline 3 lớp) để chứng minh tính khả thi trong việc kiểm soát quyền truy cập của AI một cách an toàn và hiệu quả.

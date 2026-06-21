@@ -1,0 +1,72 @@
+# Môi trường và Bí mật
+.env
+.env.*
+*.pem
+*.key
+*.cert
+
+# implementation plan
+implementation_plan.md
+
+# Python cache và build
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+.env_dir/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# LangGraph / Persistence / Database
+*.sqlite
+*.sqlite3
+*.db
+.langchain.db
+
+# IDEs / OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+CLAUDE.md
+plant_sql_writer_agent.md
+
+.claude
+agentic-env
+
+tests/fixtures/llm_cache
