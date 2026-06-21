@@ -83,9 +83,10 @@ export default function App() {
             // console.log("Parsed event type:", currentEventType)
           } else if (line.startsWith('data: ') && currentEventType) {
             try {
+              const eventType = currentEventType
               const data = JSON.parse(line.slice(6))
               // console.log("Parsed data:", data)
-              setEvents(prev => [...prev, { type: currentEventType, data }])
+              setEvents(prev => [...prev, { type: eventType, data }])
             } catch (err) { 
               console.error('Failed to parse SSE data:', line.slice(6), err)
             }
