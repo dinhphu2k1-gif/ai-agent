@@ -155,16 +155,8 @@ async def chat(req: ChatRequest, db: Session = Depends(get_db)):
             await asyncio.sleep(0.2)
 
             # Step 5: Result
-            # Convert Decimal and other non-serializable types
-            clean_rows = []
-            for row in result.rows:
-                clean = {}
-                for k, v in row.items():
-                    if hasattr(v, "as_integer_ratio"):  # Decimal
-                        clean[k] = float(v)
-                    else:
-                        clean[k] = v
-                clean_rows.append(clean)
+            from fastapi.encoders import jsonable_encoder
+            clean_rows = jsonable_encoder(result.rows)
 
             yield {
                 "event": "result",
