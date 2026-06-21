@@ -36,14 +36,19 @@ Backend chứa logic phân quyền (Filter Engine), gọi AI, và API kết nố
 # 1. Di chuyển vào thư mục backend
 cd backend
 
-# 2. Cài đặt các thư viện Python cần thiết
-pip3 install -r requirements.txt --user
+# 2. Tạo và kích hoạt môi trường ảo (Virtual Environment)
+# (Lưu ý: Nếu gặp lỗi thiếu venv trên Ubuntu/Debian, hãy chạy: sudo apt install python3.10-venv)
+python3 -m venv .venv
+source .venv/bin/activate
 
-# 3. Tạo cơ sở dữ liệu mẫu (Chỉ cần chạy 1 lần đầu tiên)
+# 3. Cài đặt các thư viện Python cần thiết
+pip install -r requirements.txt
+
+# 4. Tạo cơ sở dữ liệu mẫu (Chỉ cần chạy 1 lần đầu tiên)
 # Script này tạo table, users, roles, permissions và dummy banking data
 python3 seed_data.py
 
-# 4. Khởi chạy server
+# 5. Khởi chạy server
 python3 main.py
 ```
 Backend sẽ chạy tại: **http://localhost:8000**

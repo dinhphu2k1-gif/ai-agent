@@ -274,7 +274,11 @@ def filter_and_execute(sql: str, user: User, db: Session) -> FilteredResult:
 
     # Process Columns Level Security
     # Replace denied columns with NULL everywhere in the query
+    # And strip db/catalog prefix from all columns to avoid subquery alias issues in PostgreSQL
     for col_node in list(ast.find_all(exp.Column)):
+        col_node.set("db", None)
+        col_node.set("catalog", None)
+        
         col_name = col_node.name
         table_alias = col_node.table
         chain = alias_to_table_chain.get(table_alias)
