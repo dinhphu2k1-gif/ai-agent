@@ -1,7 +1,7 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import type { FormEvent } from 'react'
 import './index.css'
-
+import { AdminPanel } from './components/AdminPanel'
 const API_BASE = 'http://localhost:8000'
 
 interface UserInfo {
@@ -34,12 +34,29 @@ const ROLE_ICONS: Record<string, string> = {
 // ─── App ─────────────────────────────────────────────────
 
 export default function App() {
-  const [users] = useState<UserInfo[]>(PRESET_USERS)
+  const [users, setUsers] = useState<UserInfo[]>(PRESET_USERS)
   const [activeUser, setActiveUser] = useState<string>('teller_hn')
   const [question, setQuestion] = useState('')
   const [events, setEvents] = useState<StreamEvent[]>([])
   const [loading, setLoading] = useState(false)
+  const [showAdmin, setShowAdmin] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/users`)
+      if (res.ok) {
+        const data = await res.json()
+        setUsers(data)
+      }
+    } catch (e) {
+      console.error('Failed to load users', e)
+    }
+  }
+
+  useEffect(() => {
+    fetchUsers()
+  }, [])
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -115,7 +132,22 @@ export default function App() {
           </div>
         </div>
 
-        <div className="user-switcher">
+        <div className="user-switcher" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <button 
+            onClick={() => setShowAdmin(true)}
+            style={{ 
+              background: 'linear-gradient(to right, #8b5cf6, #ec4899)', 
+              color: 'white', 
+              border: 'none', 
+              padding: '8px 12px', 
+              borderRadius: '6px', 
+              cursor: 'pointer', 
+              fontWeight: 600,
+              marginRight: '12px'
+            }}
+          >
+            ⚙️ Quản lý
+          </button>
           {users.map(u => (
             <button
               key={u.username}
@@ -155,6 +187,13 @@ export default function App() {
           ))}
         </div>
       </main>
+
+      {showAdmin && (
+        <AdminPanel 
+          onClose={() => setShowAdmin(false)} 
+          onUserAdded={fetchUsers} 
+        />
+      )}
     </>
   )
 }

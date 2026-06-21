@@ -43,8 +43,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from routers import admin
+app.include_router(admin.router)
 
 # ─── Schemas ──────────────────────────────────────────────
+
 
 class ChatRequest(BaseModel):
     question: str
