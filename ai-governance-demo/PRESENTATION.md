@@ -80,6 +80,47 @@ Thay vì dùng Regex (cắt chuỗi văn bản) rất dễ bị bypass và dễ 
 - **Bước 4: Column Masking (Che giấu dữ liệu):** Nhận diện các cột trả về. Nếu có chính sách che giấu (`PARTIAL`, `HASH`, `REDACT`), dữ liệu sẽ được biến đổi sau khi query chạy xong, ngay trước khi trả về cho AI/Frontend.
 - **Bước 5: Execute:** Chạy truy vấn SQL đã được viết lại một cách an toàn tuyệt đối.
 
+```mermaid
+graph TD
+    %% Định dạng style cho các khối
+    classDef main fill:#2b5c8f,stroke:#1e3f66,stroke-width:2px,color:#fff,font-weight:bold;
+    classDef example fill:#f4f6f8,stroke:#a0aec0,stroke-width:2px,stroke-dasharray: 5 5,color:#2d3748,text-align:left;
+    classDef io fill:#1a202c,stroke:#4a5568,stroke-width:2px,color:#fff,font-weight:bold;
+
+    Start(["📥 Chuỗi SQL thô do AI sinh ra"]):::io
+
+    %% Các bước
+    S1["BƯỚC 1: Parse & Qualify<br/>Chuyển thành cây AST & Phân giải Alias"]:::main
+    E1["📝 <b>Ví dụ:</b><br/>Từ bí danh <code>t.amount</code>, hệ thống tự động<br/>phân giải thành <code>core_banking.transactions.amount</code><br/>để nhận diện chính xác cột của bảng nào."]:::example
+
+    S2["BƯỚC 2: Table-Level Security & RLS<br/>Bọc Row Filter vào các bảng được ALLOW"]:::main
+    E2["📝 <b>Ví dụ:</b> Đảm bảo user chỉ thấy dữ liệu chi nhánh của mình<br/><code>JOIN core_banking.customers</code><br/>⬇️<br/><code>JOIN (SELECT * FROM customers WHERE branch_code = 'DN')</code>"]:::example
+
+    S3["BƯỚC 3: Column-Level Security<br/>Thay thế cột bị cấm (DENY) bằng NULL trong AST"]:::main
+    E3["📝 <b>Ví dụ:</b> Cột số điện thoại bị cấm (DENY)<br/><code>SELECT c.name, c.phone</code><br/>⬇️<br/><code>SELECT c.name, NULL AS phone</code><br/><i>(Vô hiệu hóa hoàn toàn nỗ lực đoán dữ liệu qua mệnh đề WHERE)</i>"]:::example
+
+    S4["BƯỚC 4: Column Masking<br/>Nhận diện các cột cần che giấu (PARTIAL, HASH...)"]:::main
+    E4["📝 <b>Ví dụ:</b> Cột <code>name</code> có chính sách PARTIAL MASKING.<br/>Hệ thống đánh dấu cột này để biến đổi sau khi query chạy xong."]:::example
+
+    S5["BƯỚC 5: Execute<br/>Thực thi truy vấn an toàn & Che giấu kết quả"]:::main
+    E5["📝 <b>Ví dụ:</b> SQL chạy xong trả về <code>name = 'Nguyễn Văn A'</code><br/>Hệ thống áp dụng Masking trước khi trả về ➔ <code>'Nguyễn V*** A'</code>"]:::example
+
+    End(["📤 Dữ liệu sạch & an toàn trả về cho AI/Frontend"]):::io
+
+    %% Kết nối
+    Start --> S1
+    S1 -.-> E1
+    S1 --> S2
+    S2 -.-> E2
+    S2 --> S3
+    S3 -.-> E3
+    S3 --> S4
+    S4 -.-> E4
+    S4 --> S5
+    S5 -.-> E5
+    S5 --> End
+```
+
 ---
 
 ## 4. Kịch Bản Demo Khuyến Nghị (Live Demo Scenarios)

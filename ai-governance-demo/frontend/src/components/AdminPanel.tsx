@@ -237,9 +237,9 @@ export function AdminPanel({ onClose, onUserAdded }: AdminPanelProps) {
                                   style={{ minWidth: '120px' }}
                                 >
                                   <option value="NONE">NONE</option>
-                                  <option value="PARTIAL">Pattern: ***</option>
+                                  <option value="PARTIAL">PARTIAL</option>
+                                  <option value="REDACT">REDACT</option>
                                   <option value="HASH">HASH</option>
-                                  <option value="DENY">DENY</option>
                                 </select>
                               ) : (
                                 <span className="text-muted">—</span>

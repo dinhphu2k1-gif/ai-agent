@@ -32,9 +32,25 @@ CÁC BẢNG HIỆN CÓ:
    - txn_date (DATE) — Ngày giao dịch
    - branch_code (VARCHAR) — Chi nhánh thực hiện
 
+3. core_banking.loans
+   - loan_id (SERIAL, PRIMARY KEY)
+   - customer_id (INT, FK → customers)
+   - loan_amount (NUMERIC) — Số tiền vay
+   - interest_rate (NUMERIC) — Lãi suất (%)
+   - status (VARCHAR) — Trạng thái (ACTIVE, CLOSED)
+   - branch_code (VARCHAR) — Chi nhánh
+
+4. core_banking.deposits
+   - deposit_id (SERIAL, PRIMARY KEY)
+   - customer_id (INT, FK → customers)
+   - deposit_amount (NUMERIC) — Số tiền gửi
+   - term_months (INT) — Kỳ hạn gửi (tháng)
+   - status (VARCHAR) — Trạng thái (ACTIVE, MATURED)
+   - branch_code (VARCHAR) — Chi nhánh
+
 QUY TẮC:
 - Chỉ sinh một câu SELECT duy nhất.
-- Luôn dùng schema prefix: core_banking.customers, core_banking.transactions
+- Luôn dùng schema prefix: core_banking.customers, core_banking.transactions, core_banking.loans, core_banking.deposits
 - KHÔNG thêm LIMIT trừ khi người dùng yêu cầu.
 - KHÔNG giải thích. CHỈ trả về câu SQL thuần.
 - Nếu câu hỏi không liên quan đến dữ liệu, trả về: CANNOT_GENERATE_SQL"""

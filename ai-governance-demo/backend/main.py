@@ -5,6 +5,7 @@ import asyncio
 import json
 import traceback
 import uuid
+import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Depends, HTTPException, Query
@@ -18,6 +19,12 @@ from database import engine, get_db, Base
 from models import User, Role, UserRole
 from services.ai_agent import text_to_sql, check_ollama_health
 from services.filter_engine import filter_and_execute
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+)
+logger = logging.getLogger(__name__)
 
 
 # ─── Lifespan ─────────────────────────────────────────────
@@ -126,6 +133,9 @@ async def chat(req: ChatRequest, db: Session = Depends(get_db)):
 
             sql = await text_to_sql(req.question)
 
+            logger.info(f"User '{req.user_id}' asked: {req.question}")
+            logger.info(f"Generated SQL: {sql}")
+
             if "CANNOT_GENERATE_SQL" in sql:
                 yield {
                     "event": "error",
@@ -146,6 +156,7 @@ async def chat(req: ChatRequest, db: Session = Depends(get_db)):
             }
 
             result = filter_and_execute(sql, user, db)
+            logger.info(f"Rewritten SQL (after filter): {result.rewritten_sql}")
 
             # Step 4: Policy
             yield {

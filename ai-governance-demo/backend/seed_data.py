@@ -36,6 +36,8 @@ def _id(label: str) -> uuid.UUID:
 BANKING_DDL = """
 CREATE SCHEMA IF NOT EXISTS core_banking;
 
+DROP TABLE IF EXISTS core_banking.deposits CASCADE;
+DROP TABLE IF EXISTS core_banking.loans CASCADE;
 DROP TABLE IF EXISTS core_banking.transactions CASCADE;
 DROP TABLE IF EXISTS core_banking.customers CASCADE;
 
@@ -57,14 +59,37 @@ CREATE TABLE core_banking.transactions (
     branch_code   VARCHAR(10) NOT NULL
 );
 
+CREATE TABLE core_banking.loans (
+    loan_id       SERIAL PRIMARY KEY,
+    customer_id   INT REFERENCES core_banking.customers(customer_id),
+    loan_amount   NUMERIC(15,2) NOT NULL,
+    interest_rate NUMERIC(5,2),
+    status        VARCHAR(20),
+    branch_code   VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE core_banking.deposits (
+    deposit_id     SERIAL PRIMARY KEY,
+    customer_id    INT REFERENCES core_banking.customers(customer_id),
+    deposit_amount NUMERIC(15,2) NOT NULL,
+    term_months    INT,
+    status         VARCHAR(20),
+    branch_code    VARCHAR(10) NOT NULL
+);
+
 INSERT INTO core_banking.customers (customer_id, full_name, phone_number, id_number, branch_code, balance) VALUES
 (1, 'Nguyễn Văn An',    '0912345678', '001099012345', 'HN',  150000000),
 (2, 'Trần Thị Bình',    '0987654321', '001099067890', 'HN',   85000000),
 (3, 'Lê Hoàng Cường',   '0901234567', '079099011111', 'HCM', 320000000),
 (4, 'Phạm Minh Đức',    '0938765432', '079099022222', 'HCM',  45000000),
-(5, 'Võ Thị Lan',       '0905111222', '048099033333', 'DN',  200000000);
+(5, 'Võ Thị Lan',       '0905111222', '048099033333', 'DN',  200000000),
+(6, 'Bùi Hữu Nghĩa',    '0911223344', '001099044444', 'HN',  500000000),
+(7, 'Đặng Thu Thảo',    '0988776655', '079099055555', 'HCM', 120000000),
+(8, 'Hồ Viết Châu',     '0909888777', '048099066666', 'DN',   15000000),
+(9, 'Phan Tấn Phát',    '0977665544', '001099077777', 'HN',  250000000),
+(10, 'Ngô Mai Phương',  '0966554433', '079099088888', 'HCM',  95000000);
 
-SELECT setval('core_banking.customers_customer_id_seq', 5);
+SELECT setval('core_banking.customers_customer_id_seq', 10);
 
 INSERT INTO core_banking.transactions (customer_id, amount, txn_type, txn_date, branch_code) VALUES
 (1,  50000000, 'DEPOSIT',   '2024-01-15', 'HN'),
@@ -72,7 +97,35 @@ INSERT INTO core_banking.transactions (customer_id, amount, txn_type, txn_date, 
 (2,  30000000, 'TRANSFER',  '2024-03-10', 'HN'),
 (3, 100000000, 'DEPOSIT',   '2024-01-20', 'HCM'),
 (4,   5000000, 'WITHDRAW',  '2024-04-05', 'HCM'),
-(5,  75000000, 'DEPOSIT',   '2024-02-28', 'DN');
+(5,  75000000, 'DEPOSIT',   '2024-02-28', 'DN'),
+(6, 200000000, 'DEPOSIT',   '2024-01-10', 'HN'),
+(6,  15000000, 'TRANSFER',  '2024-03-05', 'HN'),
+(7,  50000000, 'DEPOSIT',   '2024-02-15', 'HCM'),
+(8,   2000000, 'WITHDRAW',  '2024-04-10', 'DN'),
+(9, 100000000, 'DEPOSIT',   '2024-01-25', 'HN'),
+(9,  20000000, 'WITHDRAW',  '2024-03-20', 'HN'),
+(10, 30000000, 'DEPOSIT',   '2024-02-05', 'HCM'),
+(10, 10000000, 'TRANSFER',  '2024-04-15', 'HCM'),
+(1,  12000000, 'TRANSFER',  '2024-05-01', 'HN'),
+(3,  50000000, 'WITHDRAW',  '2024-05-10', 'HCM');
+
+INSERT INTO core_banking.loans (customer_id, loan_amount, interest_rate, status, branch_code) VALUES
+(1, 500000000, 7.5, 'ACTIVE', 'HN'),
+(3, 1200000000, 8.0, 'ACTIVE', 'HCM'),
+(5, 300000000, 7.0, 'CLOSED', 'DN'),
+(6, 800000000, 7.2, 'ACTIVE', 'HN'),
+(7, 150000000, 8.5, 'ACTIVE', 'HCM'),
+(9, 200000000, 7.8, 'CLOSED', 'HN');
+
+INSERT INTO core_banking.deposits (customer_id, deposit_amount, term_months, status, branch_code) VALUES
+(2, 200000000, 12, 'ACTIVE', 'HN'),
+(4, 50000000, 6, 'MATURED', 'HCM'),
+(5, 150000000, 24, 'ACTIVE', 'DN'),
+(6, 500000000, 12, 'ACTIVE', 'HN'),
+(8, 100000000, 6, 'ACTIVE', 'DN'),
+(10, 300000000, 24, 'ACTIVE', 'HCM'),
+(1, 100000000, 3, 'MATURED', 'HN'),
+(3, 400000000, 12, 'ACTIVE', 'HCM');
 """
 
 
@@ -83,7 +136,7 @@ def seed_banking_tables():
             stmt = stmt.strip()
             if stmt:
                 conn.execute(text(stmt))
-    print("✅ Banking tables seeded (5 customers, 6 transactions)")
+    print("✅ Banking tables seeded (10 customers, 16 transactions, 6 loans, 8 deposits)")
 
 
 # ─── 2. Resource Catalog ─────────────────────────────────
@@ -129,6 +182,22 @@ def seed_resource_catalog(session):
             ("txn_date", "date", False),
             ("branch_code", "varchar", False),
         ],
+        "loans": [
+            ("loan_id", "integer", True),
+            ("customer_id", "integer", False),
+            ("loan_amount", "numeric", False),
+            ("interest_rate", "numeric", False),
+            ("status", "varchar", False),
+            ("branch_code", "varchar", False),
+        ],
+        "deposits": [
+            ("deposit_id", "integer", True),
+            ("customer_id", "integer", False),
+            ("deposit_amount", "numeric", False),
+            ("term_months", "integer", False),
+            ("status", "varchar", False),
+            ("branch_code", "varchar", False),
+        ],
     }
 
     for tbl_name, columns in tables.items():
@@ -151,7 +220,7 @@ def seed_resource_catalog(session):
                 ))
         session.flush()
 
-    print("✅ Resource catalog seeded (1 DB → 1 Schema → 2 Tables → 12 Columns)")
+    print("✅ Resource catalog seeded (1 DB → 1 Schema → 4 Tables → 24 Columns)")
 
 
 # ─── 3. Users + Roles ────────────────────────────────────
@@ -232,16 +301,32 @@ def seed_permissions(session):
     db_seabank = _id("db-seabank")
     col_phone = _id("col-customers-phone_number")
     col_idnum = _id("col-customers-id_number")
+    col_balance = _id("col-customers-balance")
+    tbl_loans = _id("tbl-loans")
+    tbl_deposits = _id("tbl-deposits")
+    col_loan_amount = _id("col-loans-loan_amount")
+    col_deposit_amount = _id("col-deposits-deposit_amount")
 
     # ── TELLER: Row filter by branch, mask phone + id_number ──
     _add_permission(session, _id("perm-teller-customers"), teller, tbl_customers, "ALLOW",
                     row_filter_expr="branch_code = {user.branch_code}")
     _add_permission(session, _id("perm-teller-txn"), teller, tbl_transactions, "ALLOW",
                     row_filter_expr="branch_code = {user.branch_code}")
+    _add_permission(session, _id("perm-teller-loans"), teller, tbl_loans, "ALLOW",
+                    row_filter_expr="branch_code = {user.branch_code}")
+    _add_permission(session, _id("perm-teller-deposits"), teller, tbl_deposits, "ALLOW",
+                    row_filter_expr="branch_code = {user.branch_code}")
+                    
     _add_permission(session, _id("perm-teller-phone"), teller, col_phone, "ALLOW",
                     mask_type="PARTIAL", mask_pattern="***")
     _add_permission(session, _id("perm-teller-idnum"), teller, col_idnum, "ALLOW",
                     mask_type="PARTIAL", mask_pattern="***")
+    _add_permission(session, _id("perm-teller-balance"), teller, col_balance, "ALLOW",
+                    mask_type="REDACT")
+    _add_permission(session, _id("perm-teller-loan_amt"), teller, col_loan_amount, "ALLOW",
+                    mask_type="REDACT")
+    _add_permission(session, _id("perm-teller-dep_amt"), teller, col_deposit_amount, "ALLOW",
+                    mask_type="REDACT")
 
     # ── BRANCH MANAGER: Row filter by branch, hash id_number ──
     _add_permission(session, _id("perm-mgr-schema"), manager, sch_core, "ALLOW",
